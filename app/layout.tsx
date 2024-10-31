@@ -6,6 +6,9 @@ import Navbar from "@/app/components/navbar/Navbar";
 import ClientOnly from "@/app/components/ClientOnly";
 import RegisterModal from "@/app/components/modals/RegisterModal";
 import ToasterProvider from "@/app/providers/ToasterProvider";
+import LoginModal from "@/app/components/modals/LoginModal";
+import React from "react";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 const font = Exo({
     subsets: ["latin"],
@@ -27,11 +30,12 @@ export const metadata: Metadata = {
     description: "Airbnb Clone | Vacation rentals, cabin, houses & many more",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const currentUser = await getCurrentUser();
     return (
         <html lang="en">
         {/*<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>*/}
@@ -39,7 +43,8 @@ export default function RootLayout({
         <ClientOnly>
             <ToasterProvider/>
             <RegisterModal/>
-            <Navbar/>
+            <LoginModal/>
+            <Navbar currentUser={currentUser}/>
         </ClientOnly>
         {children}
         </body>
