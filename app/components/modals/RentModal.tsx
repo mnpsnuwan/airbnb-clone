@@ -7,6 +7,8 @@ import Heading from "@/app/components/Heading";
 import {options} from "@/app/components/navbar/OptionsTab";
 import OptionInput from "@/app/components/inputs/OptionInput";
 import {FieldValues, useForm} from "react-hook-form";
+import CountrySelect from "@/app/components/inputs/CountrySelect";
+import dynamic from "next/dynamic";
 
 enum STEPS {
     OPTION = 0,
@@ -46,6 +48,11 @@ const RentModal = () => {
     });
 
     const option = watch('option');
+    const location = watch('location');
+
+    const Map = useMemo(() => dynamic(() => import('@/app/components/Map'),{
+        ssr: false
+    }), [location])
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -101,12 +108,32 @@ const RentModal = () => {
         </div>
     )
 
+    if (step === STEPS.LOCATION){
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Where is your place located?"
+                    subTitle="Help guests find you!"
+                />
+
+                <CountrySelect
+                    value={location}
+                    onChange={(value)=> { setCustomValue('location', value) }}
+                />
+
+                <Map
+                    center={location?.latlng}
+                />
+            </div>
+        );
+    }
+
     return (
         <Modal
         isOpen={rentModal.isOpen}
         title="Airbnb your home!"
         onClose={rentModal.onClose}
-        onSubmit={rentModal.onClose}
+        onSubmit={onNext}
         actionLabel={actionLabel}
         secondaryAction={step === STEPS.OPTION ? undefined : onBack}
         secondaryActionLabel={secondaryActionLabel}
