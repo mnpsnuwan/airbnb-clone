@@ -4,9 +4,10 @@ import {Exo} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/navbar/Navbar";
 import ClientOnly from "@/app/components/ClientOnly";
-import RegisterModal from "@/app/components/modals/RegisterModal";
 import ToasterProvider from "@/app/providers/ToasterProvider";
+import RegisterModal from "@/app/components/modals/RegisterModal";
 import LoginModal from "@/app/components/modals/LoginModal";
+import RentModal from "@/app/components/modals/RentModal";
 import React from "react";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
         <body className={font.className}>
         <ClientOnly>
             <ToasterProvider/>
+            <RentModal/>
             <RegisterModal/>
             <LoginModal/>
             <Navbar currentUser={currentUser}/>
