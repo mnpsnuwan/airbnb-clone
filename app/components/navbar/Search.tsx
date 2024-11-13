@@ -20,7 +20,7 @@ const Search = () => {
         >
             <div className="flex flex-row items-center justify-between ">
                 <div className="px-6 text-sm font-semibold ">Select the Location</div>
-                <div className="flex flex-row items-center gap-3 pl-6 pr-2">
+                <div className="flex flex-row items-center gap-3 pl-32 pr-2">
                     <div className="p-2 text-white rounded-full bg-rose-600">
                         <BiSearch size={18}/>
                     </div>
